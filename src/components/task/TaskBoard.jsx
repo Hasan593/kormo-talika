@@ -1,9 +1,13 @@
-import TaskModal from "./TaskModal";
+/* eslint-disable react/prop-types */
 
-const TaskBoard = () => {
+import TaskActions from "./TaskActions";
+import TaskList from "./TaskList";
+
+const TaskBoard = ({tasks}) => {
     return (
         <>
-            <TaskModal />
+            <TaskList tasks={tasks}/>
+            <TaskActions />
         </>
     );
 };

@@ -1,16 +1,35 @@
 import { useState } from "react";
 
 const TaskModal = () => {
-    
-    const [task, setTask] = useState({})
 
-    const modalObject = {
+    const defaultObject = {
         id: crypto.randomUUID(),
         title: "",
         description: '',
         tags: [],
         priority: '',
         isFavorite: false
+    };
+    
+    const [task, setTask] = useState(defaultObject);
+
+    const handleChange = e => {
+        const name = e.target.name;
+        let value = e.target.value;
+
+        if (name === 'tags') {
+            value = value.split(',')
+        };
+
+        setTask({
+            ...task,
+            [name]: value,
+        });
+    };
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        console.log(task)
     }
 
     return (
@@ -28,8 +47,8 @@ const TaskModal = () => {
                             type="text"
                             name="title"
                             id="title"
-                            value=''
-                            onChange=''
+                            value={task.title}
+                            onChange={handleChange}
                             />
                         </div>
                     </div>
@@ -41,8 +60,8 @@ const TaskModal = () => {
                         type='text'
                         name="description"
                         id="description"
-                        value=''
-                        onChange=''
+                        value={task.description}
+                        onChange={handleChange}
                         ></textarea>
                     </div>
 
@@ -54,26 +73,26 @@ const TaskModal = () => {
                             type="text"
                             name="tags"
                             id="tags"
-                            value=''
-                            onChange=''
+                            value={task.tags.join(',')}
+                            onChange={handleChange}
                             />
                         </div>
-                    </div>
 
-                    <div className="space-y-2">
-                        <label htmlFor="priority">Priority</label>
-                        <select
-                        className="block w-full cursor-pointer rounded-md dark:bg-[#121A16] dark:text-white text-gray-700 px-3 py-2.5 bg-gray-500"
-                        name="priority"
-                        id="priority"
-                        value=''
-                        onChange=''
-                        >
-                            <option className="bg-stone-900" value="">Select Priority</option>
-                            <option className="bg-stone-900" value="Low">Low</option>
-                            <option className="bg-stone-900" value="Medium">Medium</option>
-                            <option className="bg-stone-900" value="High">High</option>
-                        </select>
+                        <div className="space-y-2">
+                            <label htmlFor="priority">Priority</label>
+                            <select
+                            className="block w-full cursor-pointer rounded-md dark:bg-[#121A16] dark:text-white text-gray-700 px-3 py-2.5 bg-gray-500"
+                            name="priority"
+                            id="priority"
+                            value={task.priority}
+                            onChange={handleChange}
+                            >
+                                <option className="bg-stone-900" value="">Select Priority</option>
+                                <option className="bg-stone-900" value="Low">Low</option>
+                                <option className="bg-stone-900" value="Medium">Medium</option>
+                                <option className="bg-stone-900" value="High">High</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div className="mt-16 flex justify-between">
@@ -85,6 +104,7 @@ const TaskModal = () => {
                         </button>
                         <button
                         type="submit"
+                        onClick={handleSubmit}
                         className="rounded bg-blue-600 px-4 py-2 text-white transition-all hover:opacity-80"
                         >
                         Submit
