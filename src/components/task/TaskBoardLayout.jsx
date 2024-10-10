@@ -21,7 +21,7 @@ const TaskBoardLayout = () => {
         <>
          <Header />
          <div className="mt-32 bg-red-400 flex flex-col justify-center items-center w-full px-4 sm:px-6 py-6 md:py-8 ">
-            <TaskBoard tasks={tasks}/>
+            <TaskBoard tasks={tasks} setTasks={setTasks}/>
          </div>   
          <Footer />
         </>
