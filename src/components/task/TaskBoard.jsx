@@ -4,6 +4,7 @@ import { useState } from "react";
 import TaskActions from "./TaskActions";
 import TaskList from "./TaskList";
 import TaskModal from "./TaskModal";
+import NoTasksFound from "./NoTasksFound";
 
 const TaskBoard = ({tasks, setTasks}) => {
 
@@ -20,8 +21,13 @@ const TaskBoard = ({tasks, setTasks}) => {
                         >আপনার কর্ম তালিকা তৈরি করুন</h1>
                     </div>
                     <div className="rounded-lg border dark:border-[rgba(206,206,206,0.12)] border-gray-400 dark:bg-[rgba(38,43,40,0.6)] bg-gray-300 backdrop-filter backdrop-blur-lg shadow-lg px-4 py-6 sm:px-6 md:px-8 lg:px-10 xl:px-12 md:py-10 lg:py-12">
-                        <TaskList tasks={tasks}/>
-                        <TaskActions handleModalOn={()=>setShowModal(true)} />
+                        {/* <TaskList tasks={tasks}/> */}
+
+                        {
+                            tasks.length < 1 ? <NoTasksFound /> : <TaskList tasks={tasks}/>
+                        }
+                        
+                        <TaskActions tasks={tasks} handleModalOn={()=>setShowModal(true)} />
                     </div>
                 </div>
             </section>
