@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 
 
-const TaskList = ({tasks}) => {
+const TaskList = ({tasks, handleDeleteTask}) => {
     return (
         <>
             <div className="h-[490px] overflow-auto">
@@ -48,14 +48,17 @@ const TaskList = ({tasks}) => {
                                             }
                                         </ul>
                                     </td>
-                                    <td className="text-center text-black font-bold">
+                                    <td className={`text-center font-bold ${task.priority === 'Low' ? 'text-amber-300' : task.priority === 'Medium' ? 'text-lime-300' : 'text-green-500'}`}>
                                         {task.priority}
                                     </td>
                                     <td>
                                         <div className="flex items-center justify-center space-x-3">
-                                            <button className="bg-red-500 text-white px-3 py-1 rounded-md"
+                                            <button
+                                            className="bg-red-500 text-white px-3 py-1 rounded-md"
+                                            onClick={()=>handleDeleteTask(task.id)}
                                             >Delete</button>
-                                            <button className="bg-blue-500 text-white px-3 py-1 rounded-md"
+                                            <button
+                                            className="bg-blue-500 text-white px-3 py-1 rounded-md"
                                             >Edit</button>
                                         </div>
                                     </td>

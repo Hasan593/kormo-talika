@@ -12,6 +12,21 @@ const TaskBoard = ({tasks, setTasks}) => {
 
     const saveModal = newTask => (newTask ? (setShowModal(false), setTasks([...tasks, newTask])) : setShowModal(false));
 
+    // const handleDeleteTask = taskId => {
+    //         const taskAfterDelete = tasks.filter(task => task.id !== taskId);
+    //         setTasks(taskAfterDelete);
+    // };
+    const handleDeleteTask = taskId => {
+        if (taskId) {
+            const taskAfterDelete = tasks.filter(task => task.id !== taskId);
+            setTasks(taskAfterDelete);
+        } else {
+            setTasks([]);
+        };
+    };
+
+    // const handleDeleteAll = ()=> setTasks([]); // delete all এর কাজ এই ফাংশান দিয়েও করা যাবে।
+
     return (
         <>
             <section className="mt-16 md:mt-20" id="tasks">
@@ -24,10 +39,10 @@ const TaskBoard = ({tasks, setTasks}) => {
                         {/* <TaskList tasks={tasks}/> */}
 
                         {
-                            tasks.length < 1 ? <NoTasksFound /> : <TaskList tasks={tasks}/>
+                            tasks.length < 1 ? <NoTasksFound /> : <TaskList handleDeleteTask={handleDeleteTask} tasks={tasks}/>
                         }
                         
-                        <TaskActions tasks={tasks} handleModalOn={()=>setShowModal(true)} />
+                        <TaskActions handleDeleteTask={handleDeleteTask} tasks={tasks} handleModalOn={()=>setShowModal(true)} />
                     </div>
                 </div>
             </section>
