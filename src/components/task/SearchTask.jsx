@@ -1,4 +1,5 @@
-const SearchTask = () => {
+/* eslint-disable react/prop-types */
+const SearchTask = ({searchTerm, handleSearch}) => {
     return (
         <>
         <div className="flex w-full sm:w-auto">
@@ -8,6 +9,8 @@ const SearchTask = () => {
                 id="search-dropdown"
                 className="z-20 block w-full dark:bg-[#121A16] bg-gray-200 text-gray-800 dark:text-white px-4 py-2 pr-10 focus:outline-none rounded-md"
                 placeholder="কর্ম তালিকা খুঁজুন..."
+                onChange={handleSearch}
+                value={searchTerm}
                 />
             </div>
         </div>

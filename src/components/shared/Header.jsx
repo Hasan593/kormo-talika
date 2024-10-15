@@ -2,7 +2,7 @@
 import SearchTask from "../task/SearchTask";
 import Logo from '../../assets/images/assdi-logo.png'
 
-const Header = ({theme, toggleTheme}) => {
+const Header = ({theme, toggleTheme, handleSearch, searchTerm}) => {
     return (
         <>
             <nav className="py-4 fixed top-0 w-full z-50 bg-gray-300 dark:bg-[#262B28] shadow-md transition-colors duration-500">
@@ -20,7 +20,9 @@ const Header = ({theme, toggleTheme}) => {
                     <div className="flex items-center justify-between space-x-4">
                         {/* Search Bar - Hidden on small screens, visible on medium and up */}
                         <div className="hidden md:block">
-                            <SearchTask />
+                            <SearchTask
+                            searchTerm={searchTerm}
+                            handleSearch={handleSearch}/>
                         </div>
 
                         {/* Theme Toggle Button */}
@@ -52,7 +54,10 @@ const Header = ({theme, toggleTheme}) => {
 
                 {/* Search Task Bar for Mobile - Stacked below logo */}
                 <div className="block md:hidden px-4 py-2">
-                    <SearchTask />
+                    <SearchTask 
+                    searchTerm={searchTerm}
+                    handleSearch={handleSearch}
+                    />
                 </div>
             </nav>
         </>

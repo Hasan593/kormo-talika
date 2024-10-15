@@ -23,7 +23,9 @@ const TaskBoardLayout = () => {
     useEffect(()=>{
         localStorage.setItem('theme', theme);
         document.documentElement.className= theme;
-    }, [theme])
+    }, [theme]);
+
+    const [searchTerm, setSearchTerm] = useState('');
 
     const toggleTheme = () => setTheme(theme === 'dark' ? 'lightHasan' : 'dark');
 
@@ -31,11 +33,30 @@ const TaskBoardLayout = () => {
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }, [tasks]);
 
+    const handleSearch = e => {
+        const value = e.target.value.trim();
+        setSearchTerm(value);
+    };
+
+    const displayTasks = tasks.filter(task => {
+        return task.title.toLowerCase().includes(searchTerm.toLowerCase())
+    });
+
     return (
         <>
-         <Header toggleTheme={toggleTheme} theme={theme} />
+         <Header 
+         toggleTheme={toggleTheme} 
+         theme={theme}
+         handleSearch={handleSearch}
+         searchTerm={searchTerm}
+         />
          <div className="mt-30 bg-red-400 flex flex-col justify-center items-center w-full px-4 sm:px-6 py-6 md:py-8 ">
-            <TaskBoard tasks={tasks} setTasks={setTasks}/>
+            <TaskBoard
+            displayTasks={displayTasks}
+            tasks={tasks}
+            setTasks={setTasks}
+            searchTerm={searchTerm}
+            />
          </div>   
          <Footer />
         </>

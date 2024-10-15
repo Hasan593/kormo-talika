@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 
+import { FaStar } from "react-icons/fa";
 
-const TaskList = ({tasks, handleDeleteTask}) => {
+const TaskList = ({tasks, handleDeleteTask, handleFavorite}) => {
     return (
         <>
             <div className="h-[490px] overflow-auto">
@@ -12,7 +13,7 @@ const TaskList = ({tasks, handleDeleteTask}) => {
                             ></th>
                             <th className="p-6 text-white text-sm font-semibold capitalize w-[300px]"
                             >Title</th>
-                            <th className="p-6 text-white text-sm font-semibold capitalize md:w-[350px] w-full"
+                            <th className="p-6 inline-block text-white text-sm font-semibold capitalize md:w-[350px] w-full"
                             >Description</th>
                             <th className="p-6 text-white text-sm font-semibold capitalize md:w-[350px]"
                             >Tags</th>
@@ -28,7 +29,11 @@ const TaskList = ({tasks, handleDeleteTask}) => {
                             tasks.map(task => (
                                 <tr key={task.id}>
                                     <td>
-                                        <button> ⁕ </button>
+                                        <button onClick={()=>handleFavorite(task.id)}>
+                                            {
+                                             task.isFavorite ? <FaStar color="red" /> : <FaStar color="gray" />
+                                            }
+                                        </button>
                                     </td>
                                     <td>
                                         {task.title}
@@ -56,7 +61,7 @@ const TaskList = ({tasks, handleDeleteTask}) => {
                                             <button
                                             className="bg-red-500 text-white px-3 py-1 rounded-md"
                                             onClick={()=>handleDeleteTask(task.id)}
-                                            >Delete</button>
+                                            > Delete </button>
                                             <button
                                             className="bg-blue-500 text-white px-3 py-1 rounded-md"
                                             >Edit</button>

@@ -6,7 +6,7 @@ import TaskList from "./TaskList";
 import TaskModal from "./TaskModal";
 import NoTasksFound from "./NoTasksFound";
 
-const TaskBoard = ({tasks, setTasks}) => {
+const TaskBoard = ({tasks, setTasks, displayTasks, searchTerm}) => {
 
     const [showModal, setShowModal] = useState(false);
 
@@ -24,8 +24,18 @@ const TaskBoard = ({tasks, setTasks}) => {
             setTasks([]);
         };
     };
-
     // const handleDeleteAll = ()=> setTasks([]); // delete all এর কাজ এই ফাংশান দিয়েও করা যাবে।
+
+    const handleFavorite = taskId => {
+        const updateTasks = tasks.map(task =>{
+            if(task.id === taskId){
+                return {...task, isFavorite: !task.isFavorite}
+            } else {
+                return task
+            };
+        });
+        setTasks(updateTasks);
+    };
 
     return (
         <>
@@ -39,10 +49,20 @@ const TaskBoard = ({tasks, setTasks}) => {
                         {/* <TaskList tasks={tasks}/> */}
 
                         {
-                            tasks.length < 1 ? <NoTasksFound /> : <TaskList handleDeleteTask={handleDeleteTask} tasks={tasks}/>
+                            displayTasks.length > 0 || searchTerm ? 
+                            <TaskList
+                            tasks={displayTasks}
+                            handleFavorite={handleFavorite} 
+                            handleDeleteTask={handleDeleteTask} 
+                            /> : 
+                            <NoTasksFound /> 
                         }
                         
-                        <TaskActions handleDeleteTask={handleDeleteTask} tasks={tasks} handleModalOn={()=>setShowModal(true)} />
+                        <TaskActions 
+                        handleDeleteTask={handleDeleteTask} 
+                        tasks={tasks} 
+                        handleModalOn={()=>setShowModal(true)} 
+                        />
                     </div>
                 </div>
             </section>
