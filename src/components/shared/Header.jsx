@@ -22,7 +22,8 @@ const Header = ({theme, toggleTheme, handleSearch, searchTerm}) => {
                         <div className="hidden md:block">
                             <SearchTask
                             searchTerm={searchTerm}
-                            handleSearch={handleSearch}/>
+                            handleSearch={handleSearch}
+                            />
                         </div>
 
                         {/* Theme Toggle Button */}

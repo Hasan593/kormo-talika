@@ -2,7 +2,7 @@
 
 import { FaStar } from "react-icons/fa";
 
-const TaskList = ({tasks, handleDeleteTask, handleFavorite}) => {
+const TaskList = ({tasks, handleAddEditTask, handleDeleteTask,  handleFavorite}) => {
     return (
         <>
             <div className="h-[490px] overflow-auto">
@@ -64,6 +64,7 @@ const TaskList = ({tasks, handleDeleteTask, handleFavorite}) => {
                                             > Delete </button>
                                             <button
                                             className="bg-blue-500 text-white px-3 py-1 rounded-md"
+                                            onClick={()=>handleAddEditTask(task)}
                                             >Edit</button>
                                         </div>
                                     </td>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const TaskModal = ({saveModal}) => {
+const TaskModal = ({onSave, isTaskUpdate, handleCloseClick }) => {
 
     const defaultObject = {
         id: crypto.randomUUID(),
@@ -13,8 +13,11 @@ const TaskModal = ({saveModal}) => {
         isFavorite: false
     };
     
-    const [task, setTask] = useState(defaultObject);
+    const [task, setTask] = useState(isTaskUpdate || defaultObject);
     // console.log(task)
+
+    const [isAdd] = useState(Object.is(isTaskUpdate, null));
+    // const isAdd = isTaskUpdate ? false : true;
 
     const [errors, setErrors] = useState({});
     
@@ -58,21 +61,27 @@ const TaskModal = ({saveModal}) => {
         Object.keys(test).length > 0 ? setErrors(test) 
         // Object.keys(validateForm()).length > 0 ? setErrors(validateForm()) // 57 & 58 লাইন বাদ দিয়ে শুধু এভাবে করলেউ হবে
         :
-        saveModal(task);
+        onSave(task, isAdd);
     };
 
     return (
         <>
             <div 
             className="fixed inset-0 w-full min-h-screen bg-black bg-opacity-85 z-[100] flex items-center justify-center"
-            onClick={()=>saveModal(false)}
+            onClick={handleCloseClick}
             >
                 <form
                 className="z-50 w-full max-w-xs sm:max-w-md md:max-w-lg bg-gray-700 dark:bg-[#262B28] border border-[#fefbfb]/[36%] dark:border-gray-600 rounded-lg p-8 space-y-6 overflow-auto max-h-full"
                 onClick={e=>e.stopPropagation()}
                 >
                     
-                    <h2 className="text-center text-2xl font-bold text-white">আপনার কর্ম তালিকা তৈরি করুন</h2>
+                    <h2 className="text-center text-2xl font-bold text-white">
+                        {isAdd ?
+                        'আপনার কর্ম তালিকা তৈরি করুন' 
+                        :
+                        'আপনার কর্ম তালিকা সংশোধন করুন'
+                        }
+                    </h2>
 
                     <div className="space-y-6 text-white">
                         <div className="space-y-2">
@@ -146,7 +155,7 @@ const TaskModal = ({saveModal}) => {
                         <button
                         className="rounded bg-red-600 px-4 py-2 text-white transition-all hover:opacity-80"
                         type='button'
-                        onClick={()=>saveModal(false)}
+                        onClick={handleCloseClick}
                         >
                         Close
                         </button>

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-const TaskActions = ({tasks, handleModalOn, handleDeleteTask}) => {
+const TaskActions = ({handleDeleteAllClick, handleModalOn, datalength}) => {
     return (
         <>
             <div className="mt-6">
@@ -10,10 +10,10 @@ const TaskActions = ({tasks, handleModalOn, handleDeleteTask}) => {
                     onClick={handleModalOn}
                     >Add Task</button>
                     {
-                        tasks.length > 0 && 
+                        !datalength && 
                         <button
                         className="w-full sm:w-1/3 md:w-1/4 lg:w-1/6 rounded-md bg-[#136942] hover:bg-opacity-75 px-3.5 py-2.5 text-sm font-semibold text-white"
-                        onClick={()=>handleDeleteTask()}
+                        onClick={()=>handleDeleteAllClick()}
                         >Delete All</button>
                     }
                 </div>

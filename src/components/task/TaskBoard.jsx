@@ -10,21 +10,47 @@ const TaskBoard = ({tasks, setTasks, displayTasks, searchTerm}) => {
 
     const [showModal, setShowModal] = useState(false);
 
-    const saveModal = newTask => (newTask ? (setShowModal(false), setTasks([...tasks, newTask])) : setShowModal(false));
+    const [isTaskUpdate, setIsTaskUpdate] = useState(null);
 
-    // const handleDeleteTask = taskId => {
-    //         const taskAfterDelete = tasks.filter(task => task.id !== taskId);
-    //         setTasks(taskAfterDelete);
-    // };
+    const handleAddEditTask = (newTask, isAdd)=>{
+        if (isAdd) {
+            setTasks([...tasks, newTask])
+        } else {
+            setTasks(
+                tasks.map(task => {
+                    if (task.id === newTask.id) {
+                        return newTask;
+                    }
+                    return task;
+                })
+            );
+        };
+        handleCloseClick();
+    };
+    
+    const handleEditTask = task => (setIsTaskUpdate(task), setShowModal(true));
+
+
+
+    // const saveModal = newTask =>
+    //     (newTask ? (setShowModal(false), setTasks([...tasks, newTask])) : 
+    //     setShowModal(false));
+
     const handleDeleteTask = taskId => {
-        if (taskId) {
             const taskAfterDelete = tasks.filter(task => task.id !== taskId);
             setTasks(taskAfterDelete);
-        } else {
-            setTasks([]);
-        };
     };
+    // const handleDeleteTask = taskId => {
+    //     if (taskId) {
+    //         const taskAfterDelete = tasks.filter(task => task.id !== taskId);
+    //         setTasks(taskAfterDelete);
+    //     } else {
+    //         setTasks([]);
+    //     };
+    // };
     // const handleDeleteAll = ()=> setTasks([]); // delete all এর কাজ এই ফাংশান দিয়েও করা যাবে।
+
+    const handleDeleteAllClick = ()=>setTasks([]);
 
     const handleFavorite = taskId => {
         const updateTasks = tasks.map(task =>{
@@ -36,6 +62,8 @@ const TaskBoard = ({tasks, setTasks, displayTasks, searchTerm}) => {
         });
         setTasks(updateTasks);
     };
+
+    const handleCloseClick = ()=>(setShowModal(false), setIsTaskUpdate(null))
 
     return (
         <>
@@ -54,20 +82,25 @@ const TaskBoard = ({tasks, setTasks, displayTasks, searchTerm}) => {
                             tasks={displayTasks}
                             handleFavorite={handleFavorite} 
                             handleDeleteTask={handleDeleteTask} 
+                            handleAddEditTask={handleEditTask}
                             /> : 
                             <NoTasksFound /> 
                         }
                         
                         <TaskActions 
-                        handleDeleteTask={handleDeleteTask} 
-                        tasks={tasks} 
+                        handleDeleteAllClick={handleDeleteAllClick}
+                        datalength={tasks.length <= 0}
                         handleModalOn={()=>setShowModal(true)} 
                         />
                     </div>
                 </div>
             </section>
             {
-                showModal && <TaskModal saveModal={saveModal}/>
+                showModal && (<TaskModal 
+                    onSave={handleAddEditTask}
+                    handleCloseClick={handleCloseClick}
+                    isTaskUpdate={isTaskUpdate}
+                    />)
             }
         </>
     );
